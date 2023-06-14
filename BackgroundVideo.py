@@ -1,15 +1,17 @@
-import pywhatkit as kit
-import webbrowser
-import random
+import cv2
 
-# List of search terms
-search_terms = ["subway surfers gameplay", "subway surfers world tour", "subway surfers high score"]
+from cap_from_youtube import cap_from_youtube
 
-# Select a random search term
-search_term = random.choice(search_terms)
 
-# Search for the video on YouTube
-video_url = kit.playonyt(search_term)
+youtube_url = 'https://www.youtube.com/watch?v=7kI0tLO0GVw'
 
-# Open the video in the web browser
-webbrowser.open(video_url)
+cap = cap_from_youtube(youtube_url, '1080p60')
+
+cv2.namedWindow('Visual Tactility', cv2.WINDOW_NORMAL)
+while True:
+    ret, frame = cap.read()
+    if not ret:
+        break
+    cv2.imshow('Visual Tactility', frame)
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
